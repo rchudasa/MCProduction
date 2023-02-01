@@ -19,4 +19,6 @@ crab_projects/*
 */crab_projects/*
 */crab_inference
 */crab_inference/*
+*/config_dump.py
+E2E-TauClassifier/qcd_aodsim_fullCaloHits.py
 config_dump.py
