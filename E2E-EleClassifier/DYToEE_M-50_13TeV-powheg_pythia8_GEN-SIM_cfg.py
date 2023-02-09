@@ -2,12 +2,12 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: Configuration/GenProduction/python/EGM-RunIISummer19UL18GEN-00020-fragment.py --python_filename EGM-RunIISummer19UL18GEN-00020_1_cfg.py --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN --fileout file:EGM-RunIISummer19UL18GEN-00020.root --conditions 106X_upgrade2018_realistic_v4 --beamspot Realistic25ns13TeVEarly2018Collision --step GEN --geometry DB:Extended --era Run2_2018 --no_exec
+# with command line options: Configuration/GenProduction/python/EGM-RunIIFall17wmLHEGS-00001-fragment.py --python_filename DYToEE_M-50_13TeV-powheg_pythia8_GEN-SIM_cfg.py --eventcontent RAWSIM,LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM,LHE --fileout file:DYToEE_M-50_13TeV-powheg_pythia8_GEN-SIM.root --conditions 106X_upgrade2018_realistic_v4 --beamspot Realistic25ns13TeVEarly2018Collision --customise_commands process.RandomNumberGeneratorService.externalLHEProducer.initialSeed=12345 --step LHE,GEN,SIM --geometry DB:Extended --era Run2_2018 --no_exec --mc -n 100
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run2_2018_cff import Run2_2018
 
-process = cms.Process('GEN',Run2_2018)
+process = cms.Process('SIM',Run2_2018)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -16,15 +16,17 @@ process.load('FWCore.MessageService.MessageLogger_cfi')
 process.load('Configuration.EventContent.EventContent_cff')
 process.load('SimGeneral.MixingModule.mixNoPU_cfi')
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
+process.load('Configuration.StandardSequences.GeometrySimDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
 process.load('Configuration.StandardSequences.Generator_cff')
 process.load('IOMC.EventVertexGenerators.VtxSmearedRealistic25ns13TeVEarly2018Collision_cfi')
 process.load('GeneratorInterface.Core.genFilterSummary_cff')
+process.load('Configuration.StandardSequences.SimIdeal_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(1)
+    input = cms.untracked.int32(100)
 )
 
 # Input source
@@ -36,7 +38,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('Configuration/GenProduction/python/EGM-RunIISummer19UL18GEN-00020-fragment.py nevts:1'),
+    annotation = cms.untracked.string('Configuration/GenProduction/python/EGM-RunIIFall17wmLHEGS-00001-fragment.py nevts:100'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -50,63 +52,42 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
     compressionAlgorithm = cms.untracked.string('LZMA'),
     compressionLevel = cms.untracked.int32(1),
     dataset = cms.untracked.PSet(
-        dataTier = cms.untracked.string('GEN'),
+        dataTier = cms.untracked.string('GEN-SIM'),
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('file:EGM-RunIISummer19UL18GEN-00020.root'),
+    fileName = cms.untracked.string('file:DYToEE_M-50_13TeV-powheg_pythia8_GEN-SIM.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
+    splitLevel = cms.untracked.int32(0)
+)
+
+process.LHEoutput = cms.OutputModule("PoolOutputModule",
+    dataset = cms.untracked.PSet(
+        dataTier = cms.untracked.string('LHE'),
+        filterName = cms.untracked.string('')
+    ),
+    fileName = cms.untracked.string('file:DYToEE_M-50_13TeV-powheg_pythia8_GEN-SIM_inLHE.root'),
+    outputCommands = process.LHEEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
 
 # Additional output definition
 
 # Other statements
+process.XMLFromDBSource.label = cms.string("Extended")
 process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '106X_upgrade2018_realistic_v4', '')
 
-process.gj_filter = cms.EDFilter("PythiaFilterGammaGamma",
-    AcceptPrompts = cms.bool(True),
-    EnergyCut = cms.double(1.0),
-    EtaElThr = cms.double(2.8),
-    EtaGammaThr = cms.double(2.8),
-    EtaMaxCandidate = cms.double(3.0),
-    EtaSeedThr = cms.double(2.8),
-    EtaTkThr = cms.double(2.2),
-    InvMassMax = cms.double(14000.0),
-    InvMassMin = cms.double(80.0),
-    NTkConeMax = cms.int32(2),
-    NTkConeSum = cms.int32(4),
-    PromptPtThreshold = cms.double(15.0),
-    PtElThr = cms.double(2.0),
-    PtGammaThr = cms.double(0.0),
-    PtMinCandidate1 = cms.double(15.0),
-    PtMinCandidate2 = cms.double(15.0),
-    PtSeedThr = cms.double(5.0),
-    PtTkThr = cms.double(1.6),
-    dEtaSeedMax = cms.double(0.12),
-    dPhiSeedMax = cms.double(0.2),
-    dRNarrowCone = cms.double(0.02),
-    dRSeedMax = cms.double(0.0),
-    dRTkMax = cms.double(0.2)
-)
-
-
-process.generator = cms.EDFilter("Pythia8GeneratorFilter",
+process.generator = cms.EDFilter("Pythia8HadronizerFilter",
     PythiaParameters = cms.PSet(
         parameterSets = cms.vstring(
             'pythia8CommonSettings', 
             'pythia8CP5Settings', 
+            'pythia8PowhegEmissionVetoSettings', 
             'processParameters'
         ),
-        processParameters = cms.vstring(
-            'PromptPhoton:qg2qgamma = on       ! prompt photon production', 
-            'PromptPhoton:qqbar2ggamma = on    ! prompt photon production', 
-            'PromptPhoton:gg2ggamma = on       ! prompt photon production', 
-            'PhaseSpace:pTHatMin = 20.         ! minimum pt hat for hard interactions', 
-            'PhaseSpace:pTHatMax = 40.          ! maximum pt hat for hard interactions'
-        ),
+        processParameters = cms.vstring('POWHEG:nFinal = 1'),
         pythia8CP5Settings = cms.vstring(
             'Tune:pp 14', 
             'Tune:ee 7', 
@@ -140,31 +121,53 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             'ParticleDecays:limitTau0 = on', 
             'ParticleDecays:tau0Max = 10', 
             'ParticleDecays:allowPhotonRadiation = on'
+        ),
+        pythia8PowhegEmissionVetoSettings = cms.vstring(
+            'POWHEG:veto = 1', 
+            'POWHEG:pTdef = 1', 
+            'POWHEG:emitted = 0', 
+            'POWHEG:pTemt = 0', 
+            'POWHEG:pThard = 0', 
+            'POWHEG:vetoCount = 100', 
+            'SpaceShower:pTmaxMatch = 2', 
+            'TimeShower:pTmaxMatch = 2'
         )
     ),
     comEnergy = cms.double(13000.0),
-    crossSection = cms.untracked.double(1.0),
     filterEfficiency = cms.untracked.double(1.0),
-    maxEventsToPrint = cms.untracked.int32(0),
+    maxEventsToPrint = cms.untracked.int32(1),
     pythiaHepMCVerbosity = cms.untracked.bool(False),
-    pythiaPylistVerbosity = cms.untracked.int32(0)
+    pythiaPylistVerbosity = cms.untracked.int32(1)
 )
 
 
-process.ProductionFilterSequence = cms.Sequence(process.generator+process.gj_filter)
+process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
+    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/DYToLL_NNPDF31_13TeV/Z_ee_NNPDF31_13TeV_M_50.tgz'),
+    nEvents = cms.untracked.uint32(100),
+    numberOfParameters = cms.uint32(1),
+    outputFile = cms.string('cmsgrid_final.lhe'),
+    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')
+)
+
+
+process.ProductionFilterSequence = cms.Sequence(process.generator)
 
 # Path and EndPath definitions
+process.lhe_step = cms.Path(process.externalLHEProducer)
 process.generation_step = cms.Path(process.pgen)
+process.simulation_step = cms.Path(process.psim)
 process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.RAWSIMoutput_step = cms.EndPath(process.RAWSIMoutput)
+process.LHEoutput_step = cms.EndPath(process.LHEoutput)
 
 # Schedule definition
-process.schedule = cms.Schedule(process.generation_step,process.genfiltersummary_step,process.endjob_step,process.RAWSIMoutput_step)
+process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.genfiltersummary_step,process.simulation_step,process.endjob_step,process.RAWSIMoutput_step,process.LHEoutput_step)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 # filter all path with the production filter sequence
 for path in process.paths:
+	if path in ['lhe_step']: continue
 	getattr(process,path).insert(0, process.ProductionFilterSequence)
 
 # customisation of the process.
@@ -178,6 +181,10 @@ process = addMonitoring(process)
 # End of customisation functions
 
 # Customisation from command line
+import os,random
+random.seed = os.urandom(10) #~10^14
+process.RandomNumberGeneratorService.externalLHEProducer.initialSeed = random.randint(0,999999)
+process.RandomNumberGeneratorService.generator.initialSeed = random.randint(0,999999)
 
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
