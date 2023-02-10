@@ -19,6 +19,7 @@ config.Data.splitting = 'EventBased'
 config.Data.unitsPerJob = 600000
 NJOBS = 1000
 config.Data.totalUnits = config.Data.unitsPerJob * NJOBS
+config.JobType.maxMemoryMB = 4000
 
 config.Data.outLFNDirBase = '/store/group/lpcml/rchudasa/MCGeneration'
 #config.Data.publication = False 
