@@ -14,9 +14,11 @@ config.JobType.maxMemoryMB = 4000
 
 config.Data.inputDBS = 'phys03'
 config.JobType.allowUndistributedCMSSW = True
-config.Data.inputDataset ='/DYToEE_M-50_13TeV-powheg_pythia8/lpcml-crab_DYToEE_M-50_13TeV-powheg_pythia8_GEN-SIM-LHEoutput-7e042a9e77bd8c54647ef57d77831daa/USER'
+#config.Data.inputDataset ='/DYToEE_M-50_13TeV-powheg_pythia8/lpcml-crab_DYToEE_M-50_13TeV-powheg_pythia8_GEN-SIM-LHEoutput-7e042a9e77bd8c54647ef57d77831daa/USER'
+config.Data.userInputFiles = open('DYToEE_M-50_13TeV-powheg_pythia8_GEN-SIM.txt').readlines()
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1 
+config.Data.outputPrimaryDataset = 'DYToEE_M-50_13TeV-powheg_pythia8'
 
 config.Data.outLFNDirBase = '/store/group/lpcml/rchudasa/MCGeneration'
 config.Data.publication = True 
