@@ -20,7 +20,7 @@ config.Data.unitsPerJob =1000
 NJOBS = 1000
 config.Data.totalUnits = config.Data.unitsPerJob * NJOBS
 
-config.Data.outLFNDirBase = '/store/group/lpcml/rchudsa/MCGeneration'
+config.Data.outLFNDirBase = '/store/group/lpcml/rchudasa/MCGeneration'
 #config.Data.publication = False 
 #config.Data.publication = True 
 config.Site.storageSite = 'T3_US_FNALLPC'
