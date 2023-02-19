@@ -2,7 +2,7 @@ from CRABClient.UserUtilities import config
 config = config()
 
 #config.section_('General')
-config.General.requestName = 'GJet_Pt-20to40_DoubleEMEnriched_GEN-SIM'
+config.General.requestName = 'GJet_Pt-20to40_DoubleEMEnriched_GEN-SIM-v2'
 config.General.workArea = 'crab_mc'
 config.General.transferOutputs = True
 config.General.transferLogs = True
