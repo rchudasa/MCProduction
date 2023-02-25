@@ -25,11 +25,11 @@ process.load('Configuration.StandardSequences.SimIdeal_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-#process.MessageLogger = cms.Service("MessageLogger",
-#        destinations   = cms.untracked.vstring('detailedInfo'),
-#        categories      = cms.untracked.vstring('eventNumber'),
-#        detailedInfo    = cms.untracked.PSet(eventNumber = cms.untracked.PSet(reportEvery = cms.untracked.int32(10))),
-#)
+process.MessageLogger = cms.Service("MessageLogger",
+        destinations   = cms.untracked.vstring('detailedInfo'),
+        categories      = cms.untracked.vstring('eventNumber'),
+        detailedInfo    = cms.untracked.PSet(eventNumber = cms.untracked.PSet(reportEvery = cms.untracked.int32(1000))),
+)
 
 process.genHToTauTauFilter = cms.EDFilter("GenHToTauTauFilter",
     src       = cms.InputTag("genParticles"), #GenParticles collection as input
@@ -85,7 +85,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '106X_upgrade2018_realistic_v4'
 
 process.generator = cms.EDFilter("Pythia8PtGunV3",
     PGunParameters = cms.PSet(
-        AddAntiParticle = cms.bool(True),
+        AddAntiParticle = cms.bool(False),
         MaxCTau = cms.double(3.0),
         MaxEta = cms.double(1.4),
         MaxMass = cms.double(16.0),
