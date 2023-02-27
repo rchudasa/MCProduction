@@ -1,3 +1,23 @@
+import os
+
+import FWCore.ParameterSet.VarParsing as VarParsing
+
+options = VarParsing.VarParsing ('standard')
+#options.register('gridpack',  '/eos/user/c/chatterj/GPs/ZH_LeptonicZ_LO_slc7_amd64_gcc700_CMSSW_10_6_0_tarball.tar.xz',  VarParsing.VarParsing.multiplicity.singleton, VarParsing.VarParsing.varType.string,  "Which Gridpack?")
+#options.register('gridpack',  '/afs/cern.ch/user/c/chatterj/public/Higgs_EFT/Gridpacks/SMEFTsim/ZH_ZToLL_1j_SMEFTsim_topU3l_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz',  VarParsing.VarParsing.multiplicity.singleton, VarParsing.VarParsing.varType.string,  "Which Gridpack?")
+options.register('gridpack',  '/eos/user/r/rchudasa/e2e_project/Z_slc7_amd64_gcc700_CMSSW_10_6_28_my_ZTauTau-v2.tgz',  VarParsing.VarParsing.multiplicity.singleton, VarParsing.VarParsing.varType.string,  "Which Gridpack?")
+#options.register('outputDir', './',                 VarParsing.VarParsing.multiplicity.singleton, VarParsing.VarParsing.varType.string,  "Where to store the output root file?")
+#options.maxEvents=500 # maxEvents is a registered option. 
+
+#options.outputDir = os.path.expandvars( options.outputDir )
+options.gridpack  = os.path.expandvars( options.gridpack )
+
+if not 'ipython' in VarParsing.sys.argv[0]: options.parseArguments()
+else: print "No parsing of arguments!"
+
+#if not os.path.isdir(options.outputDir):
+#    os.makedirs(options.outputDir)
+
 # Auto generated configuration file
 # using: 
 # Revision: 1.19 
@@ -148,7 +168,8 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
 
 
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('/afs/cern.ch/work/r/rchudasa/private/TauClassification/generate_GridPacks/Z_slc7_amd64_gcc700_CMSSW_10_6_28_my_ZTauTau-v2.tgz'),
+    args = cms.vstring(options.gridpack),
+    #args = cms.vstring('/afs/cern.ch/work/r/rchudasa/public/gridpacks/Z_slc7_amd64_gcc700_CMSSW_10_6_28_my_ZTauTau-v2.tgz'),
     nEvents = cms.untracked.uint32(100),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
