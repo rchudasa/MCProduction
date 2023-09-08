@@ -2,7 +2,7 @@ from CRABClient.UserUtilities import config
 config = config()
 
 #config.section_('General')
-config.General.requestName = 'test_DYToTauTau_M-50_13TeV-powheg_pythia8_GEN-SIM'
+config.General.requestName = 'DYToTauTau_M-50_13TeV-powheg_pythia8_GEN-SIM-v2'
 config.General.workArea = 'crab_mc'
 config.General.transferOutputs = True
 config.General.transferLogs = True
@@ -19,8 +19,8 @@ config.JobType.allowUndistributedCMSSW = True
 #config.JobType.numCores = 8
 #config.JobType.eventsPerLumi=100
 config.Data.splitting = 'EventBased'
-config.Data.unitsPerJob =1000
-NJOBS = 10
+config.Data.unitsPerJob =2000
+NJOBS =2000
 config.Data.totalUnits = config.Data.unitsPerJob * NJOBS
 
 config.Data.outLFNDirBase = '/store/group/lpcml/rchudasa/MCGeneration'
