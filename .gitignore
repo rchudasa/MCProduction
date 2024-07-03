@@ -25,6 +25,8 @@ crab_projects/*
 */crab_*/*
 mychecks
 mychecks/*
+E2E-TauClassifier/mychecks_HLT/
+E2E-TauClassifier/mychecks_HLT/*
 E2E-EleClassifier/dyEE.txt
 E2E-EleClassifier/test_GJet_GEN-SIM.txt
 E2E-TauClassifier/qcd_aodsim_fullCaloHits.py
