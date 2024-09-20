@@ -10,6 +10,7 @@
 *.parquet*
 .*.*
 __init__.py
+*/__pycache__
 crab_MC
 crab_MC/*
 */crab_MC
