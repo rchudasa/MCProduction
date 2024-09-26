@@ -85,7 +85,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('file:GEN_SIM_HToAATo4Tau_M3p7.root'),
+    fileName = cms.untracked.string('file:GEN_SIM_HToAATo4Tau_M14.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
@@ -97,7 +97,7 @@ if hasattr(process, "XMLFromDBSource"): process.XMLFromDBSource.label="Extended"
 if hasattr(process, "DDDetectorESProducerFromDB"): process.DDDetectorESProducerFromDB.label="Extended"
 process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '130X_mcRun3_2023_realistic_postBPix_v5', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '130X_mcRun3_2023_realistic_v15', '')
 
 process.genHToAATo4TauFilter = cms.EDFilter("GenHToAATo4TauFilter",
    src       = cms.InputTag("genParticles"), #GenParticles collection as input
@@ -122,12 +122,9 @@ process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
             '35:onMode = off',
             '35:onIfMatch = 25 25',
             '25:mMin = 3',
-            '25:m0 = 3.7',
+            '25:m0 = 14',
             '25:onMode = off',
             '25:onIfMatch = 15 -15'
-            #add hadronic tau seletion
-            '15:onMode  = on',
-            '15:offIfAny = 11 -11 13 -13',
         ),
         pythia8CP5Settings = cms.vstring(
             'Tune:pp 14',
