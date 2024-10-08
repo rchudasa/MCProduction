@@ -26,7 +26,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(200),
+    input = cms.untracked.int32(50),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
@@ -85,7 +85,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('file:GEN_SIM_HToAATo4Tau_M14.root'),
+    fileName = cms.untracked.string('file:GEN_SIM_HToAATo4Ele_0p2GeV.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
@@ -116,15 +116,37 @@ process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
             'processParameters'
         ),
         processParameters = cms.vstring(
+            #This is copied from H->AA->$mu analysis, prepID: HIG-RunIIFall18GS-00006 
+            # This section should be entirely in Pythia 8. See details in
+	    #   - http://home.thep.lu.se/~torbjorn/pythia82html/HiggsProcesses.html
+	    #   - http://home.thep.lu.se/~torbjorn/pythia82html/ParticleDataScheme.html
+	    'Higgs:useBSM = on',     # Initialize and use the two-Higgs-doublet BSM states
+	    'HiggsBSM:all = off',    # Switch off all BSM Higgs production
+	    'HiggsBSM:gg2H2 = on',   # Switch on gg->H^0(H_2^0) scattering via loop contributions primarily from top. Code 1022.
+	    '35:m0 = 125.0',         #  mass in GeV of H0 (PDG ID = 35)
+	    '36:m0 = 0.2',           #  mass in GeV of A0 (PDG ID = 36)
+	    # decays of H0 (PDG ID = 35)
+	    '35:onMode = off',       # Turn off all H0 decay modes
+	    '35:onIfMatch = 36 36',  # Allow H0 decays to A0: H0 ->A0A0
+	    # decays of A0 (PDG ID = 36)
+	    '36:onMode = off',       # Turn off all A0 decay modes
+	    '36:onIfMatch = 11 -11', # Allow A0 decays to muons: A0 ->mu+mu-
+	    # Useful debug printouts
+	    'Init:showProcesses = on',        # Print a list of all processes that will be simulated, with their estimated cross section maxima
+	    'Init:showChangedSettings = on',  # Print a list of the changed flag/mode/parameter/word setting
+	    #'Init:showAllParticleData = on', # Print a list of all particle and decay data. Warning: this will be a long list
+
+            '''
             'Higgs:useBSM = on',
             'HiggsBSM:gg2H2 = on',
             '35:m0 = 125.',
             '35:onMode = off',
             '35:onIfMatch = 25 25',
-            '25:mMin = 3',
-            '25:m0 = 14',
+            '25:mMin = 0.002',
+            '25:m0 = 0.003',
             '25:onMode = off',
-            '25:onIfMatch = 15 -15'
+            '25:onIfMatch = 11 -11'
+            '''
         ),
         pythia8CP5Settings = cms.vstring(
             'Tune:pp 14',
@@ -172,7 +194,8 @@ process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
 process.ProductionFilterSequence = cms.Sequence(process.generator)
 
 # Path and EndPath definitions
-process.generation_step = cms.Path(process.pgen + process.genHToAATo4TauFilter)
+process.generation_step = cms.Path(process.pgen)
+#process.generation_step = cms.Path(process.pgen + process.genHToAATo4TauFilter)
 process.simulation_step = cms.Path(process.psim)
 process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)

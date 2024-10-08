@@ -1,17 +1,17 @@
 from CRABClient.UserUtilities import config
 config = config()
 # See parameter defintions here: https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile#CRAB_configuration_parameters
-Mass='14' # Mass of A is generally integer but put as string if need decimal.
+Mass='4' # Mass of A is generally integer but put as string if need decimal.
 # Local job directory will be created in:
-config.General.requestName = 'GEN_SIM_HToAATo4Tau_hadronic_tauDecay_M%s_v2'%Mass
+config.General.requestName = 'GEN_SIM_HToAATo4Ele_M%s'%Mass
 config.General.workArea = 'crab_MC'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 
 # CMS cfg file goes here:
 config.JobType.pluginName = 'PrivateMC'
-config.JobType.psetName = 'GEN_SIM_HToAATo4Tau_M%s_cfg.py'%Mass
-config.Data.outputPrimaryDataset = 'HToAATo4Tau_hadronic_tauDecay_M%s_Run3_2023'%Mass
+config.JobType.psetName = 'GEN_SIM_HToAATo4Ele_M%sGeV_cfg.py'%Mass
+config.Data.outputPrimaryDataset = 'HToAATo4Ele_M%s_Run3_2023'%Mass
 
 #config.JobType.maxMemoryMB = 2800
 

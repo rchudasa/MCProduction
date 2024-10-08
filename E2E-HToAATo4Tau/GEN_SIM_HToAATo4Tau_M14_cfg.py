@@ -124,10 +124,10 @@ process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
             '25:mMin = 3',
             '25:m0 = 14',
             '25:onMode = off',
-            '25:onIfMatch = 15 -15'
+            '25:onIfMatch = 15 -15',
             # Hadronic tau mode selection only
             '15:onMode  = on',
-            '15:offIfAny = 11 -11 13 -13',
+            '15:offIfAny = 11 -11 13 -13'
         ),
         pythia8CP5Settings = cms.vstring(
             'Tune:pp 14',
