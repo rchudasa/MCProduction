@@ -1,14 +1,16 @@
 from CRABClient.UserUtilities import config
 config = config()
-Mass = '3p7'#14
+Mass = '14'#14
 
 inputProcess_ = {
-'3p7': "/HToAATo4Tau_M3p7_Run3_2023/phys_diffraction-3p7_miniAODSIM-f2508c1b00fdd2cc2fdf87ba946bfa33/USER"
-, '14': "/HToAATo4Tau_M14_Run3_2023/phys_diffraction-14_miniAODSIM-f2508c1b00fdd2cc2fdf87ba946bfa33/USER"
+#'3p7': "/HToAATo4Tau_M3p7_Run3_2023/phys_diffraction-3p7_miniAODSIM-f2508c1b00fdd2cc2fdf87ba946bfa33/USER"
+#, '14': "/HToAATo4Tau_M14_Run3_2023/phys_diffraction-14_miniAODSIM-f2508c1b00fdd2cc2fdf87ba946bfa33/USER"
+'3p7': "/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/phys_diffraction-3p7_miniAODSIM_hadronic-f2508c1b00fdd2cc2fdf87ba946bfa33/USER"
+, '14': "/HToAATo4Tau_hadronic_tauDecay_M14_Run3_2023/phys_diffraction-14_miniAODSIM_hadronic-f2508c1b00fdd2cc2fdf87ba946bfa33/USER"
 }.get(Mass, None)
 
 #config.section_('General')
-config.General.requestName = '%s_nanoAODSIM'%Mass
+config.General.requestName = '%s_nanoAODSIM_hadronic'%Mass
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
 config.General.transferLogs = True

@@ -1,14 +1,16 @@
 from CRABClient.UserUtilities import config
 config = config()
-Mass = '14'#14
+Mass = '3p7'#14
 
 inputProcess_ = {
-'3p7': "/HToAATo4Tau_M3p7_Run3_2023/phys_diffraction-3p7_AODSIM-1aff9968d58b5116c6a273898fab2d56/USER"
-, '14': "/HToAATo4Tau_M14_Run3_2023/phys_diffraction-14_AODSIM-1aff9968d58b5116c6a273898fab2d56/USER"
+#'3p7': "/HToAATo4Tau_M3p7_Run3_2023/phys_diffraction-3p7_AODSIM-1aff9968d58b5116c6a273898fab2d56/USER"
+#, '14': "/HToAATo4Tau_M14_Run3_2023/phys_diffraction-14_AODSIM-1aff9968d58b5116c6a273898fab2d56/USER"
+'3p7': "/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/phys_diffraction-3p7_AODSIM_hadronic-1aff9968d58b5116c6a273898fab2d56/USER"
+,'14': "/HToAATo4Tau_hadronic_tauDecay_M14_Run3_2023/phys_diffraction-14_AODSIM_hadronic-1aff9968d58b5116c6a273898fab2d56/USER"
 }.get(Mass, None)
 
 #config.section_('General')
-config.General.requestName = '%s_miniAODSIM'%Mass
+config.General.requestName = '%s_miniAODSIM_hadronic'%Mass
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
 config.General.transferLogs = True
