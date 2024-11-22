@@ -32,7 +32,7 @@ outputDataset_ = {
 }.get(Mass, None)
 
 #config.section_('General')
-config.General.requestName = '%s_AODSIM_oneBlock_multiThreads_8Gb'%Mass
+config.General.requestName = '%s_AODSIM_oneBlock_multiThreads_8Gb_new'%Mass
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
 config.General.transferLogs = True
@@ -45,7 +45,7 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'step3_AODSIM_cfg.py'
 #config.JobType.maxMemoryMB = 4000
 config.JobType.maxMemoryMB = 8000
-config.JobType.numCores = 4
+config.JobType.numCores = 8 
 
 config.Data.inputDBS = 'global'
 #config.Data.inputDBS = 'phys03'
