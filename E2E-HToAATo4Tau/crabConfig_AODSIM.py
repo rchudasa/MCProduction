@@ -1,14 +1,18 @@
 from CRABClient.UserUtilities import config
 config = config()
 #Mass = 'DYto2L'
-Mass = 'QCD'
+#Mass = 'QCD'
 #Mass = 'TTbar'
 #Mass = 'HTauTau'
+Mass = 'WJets'
 
 inputDataset_ ={
-'QCD':'/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/Run3Summer23DRPremix-castor_130X_mcRun3_2023_realistic_v14-v1/GEN-SIM-RAW'
+'3p7':'/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/phys_diffraction-3p7_DIGI-Premix_hadronicNew-c017b2c35ae16f5766f4c67c30206b8e/USER'
+,'14':'/HToAATo4Tau_hadronic_tauDecay_M14_Run3_2023/phys_diffraction-14_DIGI-Premix_hadronicNew-c017b2c35ae16f5766f4c67c30206b8e/USER'
+,'QCD':'/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/Run3Summer23DRPremix-castor_130X_mcRun3_2023_realistic_v14-v1/GEN-SIM-RAW'
 ,'TTbar':'/TT_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer23BPixDRPremix-130X_mcRun3_2023_realistic_postBPix_v2-v2/GEN-SIM-RAW'
 ,'HTauTau':'/GluGluHToTauTau_M-125_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer23BPixDRPremix-130X_mcRun3_2023_realistic_postBPix_v2-v2/GEN-SIM-RAW'
+,'WJets':'/WtoLNu-2Jets_TuneCP5_13p6TeV_amcatnloFXFX-pythia8/lpcml-WJets_DIGI-Premix-c017b2c35ae16f5766f4c67c30206b8e/USER'
 }.get(Mass, None)
 
 
@@ -32,23 +36,23 @@ outputDataset_ = {
 }.get(Mass, None)
 
 #config.section_('General')
-config.General.requestName = '%s_AODSIM_oneBlock_multiThreads_8Gb_new'%Mass
+config.General.requestName = '%s_AODSIM_multiThreads'%Mass
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 
 config.Data.inputDataset =inputDataset_
-config.Data.inputBlocks =inputProcess_
+#config.Data.inputBlocks =inputProcess_
 #config.section_('JobType')
 #config.JobType.pluginName = 'PrivateMC'
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'step3_AODSIM_cfg.py'
 #config.JobType.maxMemoryMB = 4000
-config.JobType.maxMemoryMB = 8000
-config.JobType.numCores = 8 
+config.JobType.maxMemoryMB = 4000
+config.JobType.numCores = 4 
 
-config.Data.inputDBS = 'global'
-#config.Data.inputDBS = 'phys03'
+#config.Data.inputDBS = 'global'
+config.Data.inputDBS = 'phys03'
 config.JobType.allowUndistributedCMSSW = True
 #config.Data.inputDataset = inputProcess_
 
@@ -60,6 +64,7 @@ config.Data.unitsPerJob = 1
 #config.Data.outputPrimaryDataset = outputDataset_ 
 
 #config.Site.whitelist = ['T2_IN_TIFR']
+#config.Data.outLFNDirBase = '/store/group/phys_diffraction/rchudasa/MCGeneration'
 config.Data.outLFNDirBase = '/store/group/lpcml/rchudasa/MCGenerationRun3'
 #config.Site.storageSite = 'T2_CH_CERN'
 config.Site.storageSite = 'T3_US_FNALLPC'
