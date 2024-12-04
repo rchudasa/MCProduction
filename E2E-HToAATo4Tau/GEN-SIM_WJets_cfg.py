@@ -1,8 +1,9 @@
-# Auto generated configuration file
-# using:
-# Revision: 1.19
-# Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v
-# with command line options: Configuration/GenProduction/python/HIG-Run3Summer23BPixGS-00006-fragment_modified_To_H_AA_4Tau_hadronic.py --python_filename HToAA4Tau_GEN_SIM_cfg.py --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --fileout file:GEN_SIM_HToAATo4Tau.root --conditions 130X_mcRun3_2023_realistic_postBPix_v5 --beamspot Realistic25ns13p6TeVEarly2023Collision --step GEN,SIM --geometry DB:Extended --era Run3_2023 --no_exec --mc -n 10
+# GEN-Run3Summer23BPixwmLHEGS-00489
+#Auto generated configuration file
+# using: 
+# Revision: 1.19 
+# Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
+# with command line options: Configuration/GenProduction/python/GEN-Run3Summer23BPixwmLHEGS-00489-fragment.py --python_filename GEN-Run3Summer23BPixwmLHEGS-00489_1_cfg.py --eventcontent RAWSIM,LHE --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM,LHE --fileout file:GEN-Run3Summer23BPixwmLHEGS-00489.root --conditions 130X_mcRun3_2023_realistic_postBPix_v6 --beamspot Realistic25ns13p6TeVEarly2023Collision --customise_commands process.RandomNumberGeneratorService.externalLHEProducer.initialSeed=int() --step LHE,GEN,SIM --geometry DB:Extended --era Run3_2023 --no_exec --mc -n 100
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_2023_cff import Run3_2023
@@ -26,7 +27,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(1000),
+    input = cms.untracked.int32(100),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
@@ -67,7 +68,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('Configuration/GenProduction/python/HIG-Run3Summer23BPixGS-00006-fragment_modified_To_H_AA_4Tau_hadronic.py nevts:10'),
+    annotation = cms.untracked.string('Configuration/GenProduction/python/GEN-Run3Summer23BPixwmLHEGS-00489-fragment.py nevts:100'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -85,8 +86,18 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('file:GEN_SIM_HToAATo4Tau_M3p7.root'),
+    fileName = cms.untracked.string('file:GEN-SIM_WJets.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
+    splitLevel = cms.untracked.int32(0)
+)
+
+process.LHEoutput = cms.OutputModule("PoolOutputModule",
+    dataset = cms.untracked.PSet(
+        dataTier = cms.untracked.string('LHE'),
+        filterName = cms.untracked.string('')
+    ),
+    fileName = cms.untracked.string('file:GEN-SIM_WJets_inLHE.root'),
+    outputCommands = process.LHEEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
 
@@ -97,37 +108,32 @@ if hasattr(process, "XMLFromDBSource"): process.XMLFromDBSource.label="Extended"
 if hasattr(process, "DDDetectorESProducerFromDB"): process.DDDetectorESProducerFromDB.label="Extended"
 process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '130X_mcRun3_2023_realistic_postBPix_v5', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '130X_mcRun3_2023_realistic_postBPix_v6', '')
 
-process.genHToAATo4TauFilter = cms.EDFilter("GenHToAATo4TauFilter",
-   src       = cms.InputTag("genParticles"), #GenParticles collection as input
-   nHiggs    = cms.double(1),    #Number of H->AA->4Tau candidates
-   tauPtCut  = cms.double(20.0), #at least a GenTau with this minimum pT
-   tauEtaCut = cms.double(2.4),    #GenTau eta max value
-   taudRCut  = cms.double(4444.4)   #GenTauTau dR max value for merged taus : Note this is ignored for this generation in actual filter
-
-)
-
-process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
+process.generator = cms.EDFilter("Pythia8ConcurrentHadronizerFilter",
     PythiaParameters = cms.PSet(
         parameterSets = cms.vstring(
             'pythia8CommonSettings',
             'pythia8CP5Settings',
-            'processParameters'
+            'pythia8aMCatNLOSettings',
+            'processParameters',
+            'pythia8PSweightsSettings'
         ),
         processParameters = cms.vstring(
-            'Higgs:useBSM = on',
-            'HiggsBSM:gg2H2 = on',
-            '35:m0 = 125.',
-            '35:onMode = off',
-            '35:onIfMatch = 25 25',
-            '25:mMin = 3',
-            '25:m0 = 3.7',
-            '25:onMode = off',
-            '25:onIfMatch = 15 -15',
-            #add hadronic tau seletion
-            '15:onMode  = on',
-            '15:offIfAny = 11 -11 13 -13'
+            'JetMatching:setMad = off',
+            'JetMatching:scheme = 1',
+            'JetMatching:merge = on',
+            'JetMatching:jetAlgorithm = 2',
+            'JetMatching:etaJetMax = 999.',
+            'JetMatching:coneRadius = 1.',
+            'JetMatching:slowJetPower = 1',
+            'JetMatching:doFxFx = on',
+            'JetMatching:qCut = 30.',
+            'JetMatching:qCutME = 10',
+            'JetMatching:nJetMax = 2',
+            'TimeShower:mMaxGamma = 4.0',
+            'JetMatching:nQmatch = 5',
+            'BeamRemnants:primordialKThard=2.48'
         ),
         pythia8CP5Settings = cms.vstring(
             'Tune:pp 14',
@@ -161,38 +167,71 @@ process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
             'ParticleDecays:limitTau0 = on',
             'ParticleDecays:tau0Max = 10',
             'ParticleDecays:allowPhotonRadiation = on'
+        ),
+        pythia8PSweightsSettings = cms.vstring(
+            'UncertaintyBands:doVariations = on',
+            'UncertaintyBands:List = {isrRedHi isr:muRfac=0.707,fsrRedHi fsr:muRfac=0.707,isrRedLo isr:muRfac=1.414,fsrRedLo fsr:muRfac=1.414,isrDefHi isr:muRfac=0.5,fsrDefHi fsr:muRfac=0.5,isrDefLo isr:muRfac=2.0,fsrDefLo fsr:muRfac=2.0,isrConHi isr:muRfac=0.25,fsrConHi fsr:muRfac=0.25,isrConLo isr:muRfac=4.0,fsrConLo fsr:muRfac=4.0,fsr_G2GG_muR_dn fsr:G2GG:muRfac=0.5,fsr_G2GG_muR_up fsr:G2GG:muRfac=2.0,fsr_G2QQ_muR_dn fsr:G2QQ:muRfac=0.5,fsr_G2QQ_muR_up fsr:G2QQ:muRfac=2.0,fsr_Q2QG_muR_dn fsr:Q2QG:muRfac=0.5,fsr_Q2QG_muR_up fsr:Q2QG:muRfac=2.0,fsr_X2XG_muR_dn fsr:X2XG:muRfac=0.5,fsr_X2XG_muR_up fsr:X2XG:muRfac=2.0,fsr_G2GG_cNS_dn fsr:G2GG:cNS=-2.0,fsr_G2GG_cNS_up fsr:G2GG:cNS=2.0,fsr_G2QQ_cNS_dn fsr:G2QQ:cNS=-2.0,fsr_G2QQ_cNS_up fsr:G2QQ:cNS=2.0,fsr_Q2QG_cNS_dn fsr:Q2QG:cNS=-2.0,fsr_Q2QG_cNS_up fsr:Q2QG:cNS=2.0,fsr_X2XG_cNS_dn fsr:X2XG:cNS=-2.0,fsr_X2XG_cNS_up fsr:X2XG:cNS=2.0,isr_G2GG_muR_dn isr:G2GG:muRfac=0.5,isr_G2GG_muR_up isr:G2GG:muRfac=2.0,isr_G2QQ_muR_dn isr:G2QQ:muRfac=0.5,isr_G2QQ_muR_up isr:G2QQ:muRfac=2.0,isr_Q2QG_muR_dn isr:Q2QG:muRfac=0.5,isr_Q2QG_muR_up isr:Q2QG:muRfac=2.0,isr_X2XG_muR_dn isr:X2XG:muRfac=0.5,isr_X2XG_muR_up isr:X2XG:muRfac=2.0,isr_G2GG_cNS_dn isr:G2GG:cNS=-2.0,isr_G2GG_cNS_up isr:G2GG:cNS=2.0,isr_G2QQ_cNS_dn isr:G2QQ:cNS=-2.0,isr_G2QQ_cNS_up isr:G2QQ:cNS=2.0,isr_Q2QG_cNS_dn isr:Q2QG:cNS=-2.0,isr_Q2QG_cNS_up isr:Q2QG:cNS=2.0,isr_X2XG_cNS_dn isr:X2XG:cNS=-2.0,isr_X2XG_cNS_up isr:X2XG:cNS=2.0}',
+            'UncertaintyBands:nFlavQ = 4',
+            'UncertaintyBands:MPIshowers = on',
+            'UncertaintyBands:overSampleFSR = 10.0',
+            'UncertaintyBands:overSampleISR = 10.0',
+            'UncertaintyBands:FSRpTmin2Fac = 20',
+            'UncertaintyBands:ISRpTmin2Fac = 20'
+        ),
+        pythia8aMCatNLOSettings = cms.vstring(
+            'SpaceShower:pTmaxMatch = 1',
+            'SpaceShower:pTmaxFudge = 1',
+            'SpaceShower:MEcorrections = off',
+            'TimeShower:pTmaxMatch = 1',
+            'TimeShower:pTmaxFudge = 1',
+            'TimeShower:MEcorrections = off',
+            'TimeShower:globalRecoil = on',
+            'TimeShower:limitPTmaxGlobal = on',
+            'TimeShower:nMaxGlobalRecoil = 1',
+            'TimeShower:globalRecoilMode = 2',
+            'TimeShower:nMaxGlobalBranch = 1',
+            'TimeShower:weightGluonToQuark = 1'
         )
     ),
-    comEnergy = cms.double(13600.0),
-    crossSection = cms.untracked.double(1.0),
-    filterEfficiency = cms.untracked.double(1),
-    maxEventsToPrint = cms.untracked.int32(0),
+    comEnergy = cms.double(13600),
+    maxEventsToPrint = cms.untracked.int32(1),
     pythiaHepMCVerbosity = cms.untracked.bool(False),
-    pythiaPylistVerbosity = cms.untracked.int32(0)
+    pythiaPylistVerbosity = cms.untracked.int32(1)
 )
 
 
-process.ProductionFilterSequence = cms.Sequence(process.generator)
+process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
+    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/PdmV/Run3Summer22/MadGraph5_aMCatNLO/W/WtoLNu-2Jets_amcatnloFXFX-pythia8_slc7_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
+    generateConcurrently = cms.untracked.bool(False),
+    nEvents = cms.untracked.uint32(100),
+    numberOfParameters = cms.uint32(1),
+    outputFile = cms.string('cmsgrid_final.lhe'),
+    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')
+)
+
 
 # Path and EndPath definitions
-process.generation_step = cms.Path(process.pgen + process.genHToAATo4TauFilter)
+process.lhe_step = cms.Path(process.externalLHEProducer)
+process.generation_step = cms.Path(process.pgen)
 process.simulation_step = cms.Path(process.psim)
 process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.RAWSIMoutput_step = cms.EndPath(process.RAWSIMoutput)
+process.LHEoutput_step = cms.EndPath(process.LHEoutput)
 
 # Schedule definition
-process.schedule = cms.Schedule(process.generation_step,process.genfiltersummary_step,process.simulation_step,process.endjob_step,process.RAWSIMoutput_step)
+process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.genfiltersummary_step,process.simulation_step,process.endjob_step,process.RAWSIMoutput_step,process.LHEoutput_step)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 # filter all path with the production filter sequence
 for path in process.paths:
-	getattr(process,path).insert(0, process.ProductionFilterSequence)
+	if path in ['lhe_step']: continue
+	getattr(process,path).insert(0, process.generator)
 
 # customisation of the process.
 
 # Automatic addition of the customisation function from Configuration.DataProcessing.Utils
-from Configuration.DataProcessing.Utils import addMonitoring
+from Configuration.DataProcessing.Utils import addMonitoring 
 
 #call to customisation function addMonitoring imported from Configuration.DataProcessing.Utils
 process = addMonitoring(process)
@@ -201,6 +240,10 @@ process = addMonitoring(process)
 
 
 # Customisation from command line
+import os,random
+random.seed = os.urandom(10) #~10^14
+process.RandomNumberGeneratorService.externalLHEProducer.initialSeed = random.randint(0,999999)
+process.RandomNumberGeneratorService.generator.initialSeed = random.randint(0,999999)
 
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete

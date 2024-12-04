@@ -85,7 +85,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('file:GEN_SIM_HToAATo4Tau_M3p7.root'),
+    fileName = cms.untracked.string('file:GEN_SIM_HToAATo4Tau_M12.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
@@ -122,7 +122,7 @@ process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
             '35:onMode = off',
             '35:onIfMatch = 25 25',
             '25:mMin = 3',
-            '25:m0 = 3.7',
+            '25:m0 = 12',
             '25:onMode = off',
             '25:onIfMatch = 15 -15',
             #add hadronic tau seletion
