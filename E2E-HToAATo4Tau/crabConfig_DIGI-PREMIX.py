@@ -18,7 +18,7 @@ inputProcess_ = {
 
 #config.section_('General')
 config.General.requestName = '%s_DIGI-Premix'%Mass
-config.General.workArea = 'crab_projects'
+config.General.workArea = 'crab_bigProduction'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 
