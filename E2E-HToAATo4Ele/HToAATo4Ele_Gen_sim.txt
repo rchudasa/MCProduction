@@ -1,0 +1,17 @@
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p01GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p03GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p05GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p1GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p12GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p15GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p17GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p2GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p25GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p3GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p35GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p4GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p45GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p6GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_0p8GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_1GeV.root
+/afs/cern.ch/work/r/rchudasa/private/TauClassification/run3/check/CMSSW_13_0_14/src/MCProduction/E2E-HToAATo4Ele/HToAATo4Ele_1p2GeV.root

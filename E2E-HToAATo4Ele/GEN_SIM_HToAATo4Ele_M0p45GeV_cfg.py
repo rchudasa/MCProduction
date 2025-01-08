@@ -85,7 +85,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('file:HToAATo4Ele_0p2GeV.root'),
+    fileName = cms.untracked.string('file:HToAATo4Ele_0p45GeV.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
@@ -120,7 +120,7 @@ process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
 	    'Higgs:useBSM = on',     # Initialize and use the two-Higgs-doublet BSM states
 	    'HiggsBSM:all = off',    # Switch off all BSM Higgs production
 	    'HiggsBSM:gg2H2 = on',   # Switch on gg->H^0(H_2^0) scattering via loop contributions primarily from top. Code 1022.
-            '9000036:all = A Abar   0   0   0   0.2   1e-8   0   2e02   0.0',#name antiName spinType chargeType colType m0 mWidth mMin mMax tau0
+            '9000036:all = A Abar   0   0   0   0.45   1e-8   0   2e02   0.0',#name antiName spinType chargeType colType m0 mWidth mMin mMax tau0
             '9000036:oneChannel = 1 1 101 11 -11',
             '9000036:mayDecay = on',
             '9000036:isResonance = off',

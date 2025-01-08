@@ -1,0 +1,4 @@
+/store/group/phys_diffraction/rchudasa/MCGeneration/HToAATo4Ele_Run3_2023/HToAATo4Ele_0p01GeV.root
+/store/group/phys_diffraction/rchudasa/MCGeneration/HToAATo4Ele_Run3_2023/HToAATo4Ele_0p35GeV.root
+/store/group/phys_diffraction/rchudasa/MCGeneration/HToAATo4Ele_Run3_2023/HToAATo4Ele_0p6GeV.root
+/store/group/phys_diffraction/rchudasa/MCGeneration/HToAATo4Ele_Run3_2023/HToAATo4Ele_1p2GeV.root
