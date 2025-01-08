@@ -63,7 +63,7 @@ process.options = cms.untracked.PSet(
     numberOfConcurrentLuminosityBlocks = cms.untracked.uint32(0),
     numberOfConcurrentRuns = cms.untracked.uint32(1),
     numberOfStreams = cms.untracked.uint32(0),
-    numberOfThreads = cms.untracked.uint32(8),
+    numberOfThreads = cms.untracked.uint32(4),
     printDependencies = cms.untracked.bool(False),
     sizeOfStackForThreadsInKB = cms.optional.untracked.uint32,
     throwIfIllegalParameter = cms.untracked.bool(True),
@@ -87,7 +87,7 @@ process.AODSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(31457280),
-    fileName = cms.untracked.string('file:step3_AODSIM_M14.root'),
+    fileName = cms.untracked.string('file:step3_AODSIM.root'),
     #fileName = cms.untracked.string('file:step3_AODSIM_HTauTau_checkrechit_collection.root'),
     outputCommands = process.AODSIMEventContent.outputCommands+cms.untracked.vstring(
 	'keep *_simSiPixelDigis_*_*',
