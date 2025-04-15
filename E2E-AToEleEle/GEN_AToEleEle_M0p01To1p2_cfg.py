@@ -83,7 +83,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('GEN_HToEleEle_m0p1To6_pT20To150_ctau0To3_eta0To1p4_pythia8.root'),
+    fileName = cms.untracked.string('GEN_AToEleEle_m00p1To1p2_pythia8.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
@@ -98,7 +98,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '130X_mcRun3_2023_realistic_pos
 process.generator = cms.EDFilter("Pythia8PtGunV3",
     PGunParameters = cms.PSet(
         AddAntiParticle = cms.bool(True),
-        MaxCTau = cms.double(3.0),
+        MaxCTau = cms.double(0.0),
         MaxEta = cms.double(2.4),
         MaxPhi = cms.double(3.14159265359),
         MaxPt = cms.double(150.0),
@@ -120,7 +120,7 @@ process.generator = cms.EDFilter("Pythia8PtGunV3",
     ),
     Verbosity = cms.untracked.int32(0),
     firstRun = cms.untracked.uint32(1),
-    psethack = cms.string('H>ee pTgun'),
+    psethack = cms.string('A->ee pTgun'),
     pythiaHepMCVerbosity = cms.untracked.bool(True),
     pythiaPylistVerbosity = cms.untracked.int32(1)
 
