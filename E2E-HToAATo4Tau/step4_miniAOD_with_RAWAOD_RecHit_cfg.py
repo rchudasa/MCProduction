@@ -23,14 +23,15 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10),
+    input = cms.untracked.int32(-1),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
 # Input source
 process.source = cms.Source("PoolSource",
-        # fileNames = cms.untracked.vstring("file:root://cmseos.fnal.gov//store/group/lpcml/rchudasa/MCGenerationRun3/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/3p7_AODSIM_newBigProd/250113_144409/0000/step3_AODSIM_2.root"),
-        fileNames = cms.untracked.vstring("file:AODSIM_withRAWCollections_M3p7.root"),
+        #fileNames = cms.untracked.vstring("file:root://cmseos.fnal.gov//store/group/lpcml/bbbam/MCGeneration_run3/GEN_SIM_ATo2Tau_m3p6To18_pt30To300_v2/AOD_ATo4Tau_Hadronic_m3p6To18/241103_222918/0000/AOD_ATo2Tau_extra_collection_1.root"),
+        #fileNames = cms.untracked.vstring("/store/group/lpcml/rchudasa/MCGenerationRun3/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/3p7_AODSIM_newBigProd/250113_144409/0000/step3_AODSIM_1.root"),
+        fileNames = cms.untracked.vstring("/store/group/lpcml/bbbam/MCGeneration_run3/GEN_SIM_ATo2Tau_m3p6To18_pt30To300_v2/AOD_ATo4Tau_Hadronic_m3p6To18/241103_222918/0000/AOD_ATo2Tau_extra_collection_1.root"),
     secondaryFileNames = cms.untracked.vstring()
 )
 
@@ -85,7 +86,8 @@ process.MINIAODSIMoutput = cms.OutputModule("PoolOutputModule",
     dropMetaData = cms.untracked.string('ALL'),
     eventAutoFlushCompressedSize = cms.untracked.int32(-900),
     fastCloning = cms.untracked.bool(False),
-    fileName = cms.untracked.string('file:MINIAOD_HToAATo4Tau_RAW-AODRH.root'),
+    fileName = cms.untracked.string('file:MINIAODSIM_RAWAOD_RecHits_ATauTau.root'),
+    #fileName = cms.untracked.string('file:MINIAOD_HToAATo4Tau_RAW-AODRH.root'),
     #outputCommands = process.MINIAODSIMEventContent.outputCommands,
     outputCommands = process.MINIAODSIMEventContent.outputCommands+cms.untracked.vstring(
 	'keep *_generalTracks_*_*',
