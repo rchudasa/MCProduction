@@ -175,7 +175,8 @@ process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
 process.ProductionFilterSequence = cms.Sequence(process.generator)
 
 # Path and EndPath definitions
-process.generation_step = cms.Path(process.pgen + process.genHToAATo4TauFilter)
+process.generation_step = cms.Path(process.pgen)
+#process.generation_step = cms.Path(process.pgen + process.genHToAATo4TauFilter)
 process.simulation_step = cms.Path(process.psim)
 process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)

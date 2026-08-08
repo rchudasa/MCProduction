@@ -85,7 +85,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('file:GEN_SIM_HToAATo4Tau_M4.root'),
+    fileName = cms.untracked.string('file:RootFilesWithoutGenFilter/GEN_SIM_HToAATo4Tau_M4.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
@@ -175,7 +175,8 @@ process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
 process.ProductionFilterSequence = cms.Sequence(process.generator)
 
 # Path and EndPath definitions
-process.generation_step = cms.Path(process.pgen + process.genHToAATo4TauFilter)
+process.generation_step = cms.Path(process.pgen)
+#process.generation_step = cms.Path(process.pgen + process.genHToAATo4TauFilter)
 process.simulation_step = cms.Path(process.psim)
 process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)

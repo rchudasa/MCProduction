@@ -83,7 +83,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('GEN_AToEleEle_m00p1To1p2_pythia8.root'),
+    fileName = cms.untracked.string('GEN_AToEleEle_m0p01To1p2_pythia8.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
@@ -106,7 +106,7 @@ process.generator = cms.EDFilter("Pythia8PtGunV3",
         MinCTau = cms.double(0.0),
         MinEta = cms.double(-2.4),
         MinPhi = cms.double(-3.14159265359),
-        MinPt = cms.double(20.0),
+        MinPt = cms.double(30.0),
         MinMass = cms.double(0.01),
         Unbiasing = cms.bool(False),
         ParticleID = cms.vint32(25)
@@ -130,7 +130,7 @@ process.generator = cms.EDFilter("Pythia8PtGunV3",
 process.genHToEleEleFilter = cms.EDFilter("GenHToEleEleFilter",
     src       = cms.InputTag("genParticles"), #GenParticles collection as input
     nHiggs    = cms.double(1),    #Number of pdgID=25 candidates
-    elePtCut  = cms.double(1.0), #at least a GenEle with this minimum pT
+    elePtCut  = cms.double(20.0), #at least a GenEle with this minimum pT
     eleEtaCut = cms.double(2.4),  #GenEle eta
     eledRCut  = cms.double(0.4)   #GenEleEle cut
 )

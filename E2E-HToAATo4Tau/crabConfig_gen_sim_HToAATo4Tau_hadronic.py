@@ -1,7 +1,7 @@
 from CRABClient.UserUtilities import config
 config = config()
 # See parameter defintions here: https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile#CRAB_configuration_parameters
-Mass='6'# Mass of A is generally integer but put as string if need decimal.
+Mass='10'# Mass of A is generally integer but put as string if need decimal.
 # Local job directory will be created in:
 inputPSet_ ={
 '3p7':'GEN_SIM_HToAATo4Tau_M3p7_cfg.py'
@@ -15,17 +15,17 @@ inputPSet_ ={
 }.get(Mass, None)
 
 outputDataset_ = {
-'3p7':'HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023',
-'4':'HToAATo4Tau_hadronic_tauDecay_M4_Run3_2023',
-'5':'HToAATo4Tau_hadronic_tauDecay_M5_Run3_2023',
-'6':'HToAATo4Tau_hadronic_tauDecay_M6_Run3_2023',
-'8':'HToAATo4Tau_hadronic_tauDecay_M8_Run3_2023',
-'10':'HToAATo4Tau_hadronic_tauDecay_M10_Run3_2023',
-'12':'HToAATo4Tau_hadronic_tauDecay_M12_Run3_2023',
-'14':'HToAATo4Tau_hadronic_tauDecay_M14_Run3_2023',
+'3p7':'HToAATo4Tau_hadronic_tauDecayNoFilter_M3p7_Run3_2023',
+'4':'HToAATo4Tau_hadronic_tauDecayNoFilter_M4_Run3_2023',
+'5':'HToAATo4Tau_hadronic_tauDecayNoFilter_M5_Run3_2023',
+'6':'HToAATo4Tau_hadronic_tauDecayNoFilter_M6_Run3_2023',
+'8':'HToAATo4Tau_hadronic_tauDecayNoFilter_M8_Run3_2023',
+'10':'HToAATo4Tau_hadronic_tauDecayNoFilter_M10_Run3_2023',
+'12':'HToAATo4Tau_hadronic_tauDecayNoFilter_M12_Run3_2023',
+'14':'HToAATo4Tau_hadronic_tauDecayNoFilter_M14_Run3_2023',
 }.get(Mass, None)
 
-config.General.requestName = 'GEN_SIM_HToAATo4Tau_tauDecay_M%s'%Mass
+config.General.requestName = 'GEN_SIM_HToAATo4Tau_tauDecayNoFilter_M%s'%Mass
 config.General.workArea = 'crab_newBigProduction'
 config.General.transferOutputs = True
 config.General.transferLogs = True
@@ -42,8 +42,8 @@ config.JobType.numCores = 8
 # Define units per job here:
 config.JobType.allowUndistributedCMSSW = True
 config.Data.splitting = 'EventBased'
-config.Data.unitsPerJob = 5000 # units: large number is given because HToaaTo4Tau has filters about 60% eff
-NJOBS = 1200
+config.Data.unitsPerJob = 500 # units: large number is given because HToaaTo4Tau has filters about 60% eff
+NJOBS = 20
 config.Data.totalUnits = config.Data.unitsPerJob * NJOBS
 config.Data.publication = True
 

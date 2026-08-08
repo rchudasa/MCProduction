@@ -2,7 +2,7 @@
 # using:
 # Revision: 1.19
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v
-# with command line options: Configuration/GenProduction/python/HIG-Run3Summer23BPixGS-00006-fragment_modified_To_H_AA_4Tau_hadronic.py --python_filename HToAA4Tau_GEN_SIM_cfg.py --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --fileout file:GEN_SIM_HToAATo4Tau.root --conditions 130X_mcRun3_2023_realistic_postBPix_v5 --beamspot Realistic25ns13p6TeVEarly2023Collision --step GEN,SIM --geometry DB:Extended --era Run3_2023 --no_exec --mc -n 10
+# with command line options: Configuration/Generator/python/SingleNuE10_cfi.py --python_filename aToTauTau_GEN-SIM_cfg.py --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --fileout file:aToTauTau_GEN-SIM.root --conditions 130X_mcRun3_2023_realistic_postBPix_v5 --beamspot Realistic25ns13p6TeVEarly2023Collision --step GEN,SIM --geometry DB:Extended --era Run3_2023 --no_exec --mc -n 10
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_2023_cff import Run3_2023
@@ -24,6 +24,14 @@ process.load('GeneratorInterface.Core.genFilterSummary_cff')
 process.load('Configuration.StandardSequences.SimIdeal_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+
+process.genAToTauTauFilter = cms.EDFilter("GenAToTauTauFilter",
+    src       = cms.InputTag("genParticles"), #GenParticles collection as input
+    nHiggs    = cms.double(1),                #Number of pdgID=25 candidates
+    tauPtCut  = cms.double(10.0),              #at least a GenTau with this minimum pT
+    tauEtaCut = cms.double(2.4),              #GenTau eta
+    taudRCut  = cms.double(4444.4)               #GenTauTau cut # ignore this cut
+)
 
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(1000),
@@ -58,7 +66,7 @@ process.options = cms.untracked.PSet(
     numberOfConcurrentLuminosityBlocks = cms.untracked.uint32(0),
     numberOfConcurrentRuns = cms.untracked.uint32(1),
     numberOfStreams = cms.untracked.uint32(0),
-    numberOfThreads = cms.untracked.uint32(8),
+    numberOfThreads = cms.untracked.uint32(1),
     printDependencies = cms.untracked.bool(False),
     sizeOfStackForThreadsInKB = cms.optional.untracked.uint32,
     throwIfIllegalParameter = cms.untracked.bool(True),
@@ -67,7 +75,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('Configuration/GenProduction/python/HIG-Run3Summer23BPixGS-00006-fragment_modified_To_H_AA_4Tau_hadronic.py nevts:10'),
+    annotation = cms.untracked.string('Configuration/Generator/python/SingleNuE10_cfi.py nevts:10'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -85,7 +93,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(20971520),
-    fileName = cms.untracked.string('file:GEN_SIM_HToAATo4Tau_M8.root'),
+    fileName = cms.untracked.string('file:aToTauTau_m3p6To18_pt30To300_GEN.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
@@ -99,84 +107,41 @@ process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '130X_mcRun3_2023_realistic_postBPix_v5', '')
 
-process.genHToAATo4TauFilter = cms.EDFilter("GenHToAATo4TauFilter",
-   src       = cms.InputTag("genParticles"), #GenParticles collection as input
-   nHiggs    = cms.double(1),    #Number of H->AA->4Tau candidates
-   tauPtCut  = cms.double(20.0), #at least a GenTau with this minimum pT
-   tauEtaCut = cms.double(2.4),    #GenTau eta max value
-   taudRCut  = cms.double(4444.4)   #GenTauTau dR max value for merged taus : Note this is ignored for this generation in actual filter
 
-)
+process.generator = cms.EDFilter("Pythia8PtGunV3",
+    PGunParameters = cms.PSet(
+        AddAntiParticle = cms.bool(True),
+        MaxCTau = cms.double(3.0),
+        MaxEta = cms.double(2.4),
+        MaxMass = cms.double(18.),
+        MaxPhi = cms.double(3.14159265359),
+        MaxPt = cms.double(300.0),
+        MinCTau = cms.double(0.0),
+        MinEta = cms.double(-2.4),
+        MinMass = cms.double(3.6),
+        MinPhi = cms.double(-3.14159265359),
+        MinPt = cms.double(30.0),
+        ParticleID = cms.vint32(25),
+        Unbiasing = cms.bool(False)
+    ),
 
-process.generator = cms.EDFilter("Pythia8ConcurrentGeneratorFilter",
     PythiaParameters = cms.PSet(
-        parameterSets = cms.vstring(
-            'pythia8CommonSettings',
-            'pythia8CP5Settings',
-            'processParameters'
-        ),
+        parameterSets = cms.vstring('processParameters'),
         processParameters = cms.vstring(
-            'Higgs:useBSM = on',
-            'HiggsBSM:gg2H2 = on',
-            '35:m0 = 125.',
-            '35:onMode = off',
-            '35:onIfMatch = 25 25',
-            '25:mMin = 3',
-            '25:m0 = 8',
             '25:onMode = off',
             '25:onIfMatch = 15 -15',
-            #add hadronic tau seletion
-            '15:onMode  = on',
+            '15:onMode = on',
             '15:offIfAny = 11 -11 13 -13'
-        ),
-        pythia8CP5Settings = cms.vstring(
-            'Tune:pp 14',
-            'Tune:ee 7',
-            'MultipartonInteractions:ecmPow=0.03344',
-            'MultipartonInteractions:bProfile=2',
-            'MultipartonInteractions:pT0Ref=1.41',
-            'MultipartonInteractions:coreRadius=0.7634',
-            'MultipartonInteractions:coreFraction=0.63',
-            'ColourReconnection:range=5.176',
-            'SigmaTotal:zeroAXB=off',
-            'SpaceShower:alphaSorder=2',
-            'SpaceShower:alphaSvalue=0.118',
-            'SigmaProcess:alphaSvalue=0.118',
-            'SigmaProcess:alphaSorder=2',
-            'MultipartonInteractions:alphaSvalue=0.118',
-            'MultipartonInteractions:alphaSorder=2',
-            'TimeShower:alphaSorder=2',
-            'TimeShower:alphaSvalue=0.118',
-            'SigmaTotal:mode = 0',
-            'SigmaTotal:sigmaEl = 22.08',
-            'SigmaTotal:sigmaTot = 101.037',
-            'PDF:pSet=LHAPDF6:NNPDF31_nnlo_as_0118'
-        ),
-        pythia8CommonSettings = cms.vstring(
-            'Tune:preferLHAPDF = 2',
-            'Main:timesAllowErrors = 10000',
-            'Check:epTolErr = 0.01',
-            'Beams:setProductionScalesFromLHEF = off',
-            'SLHA:minMassSM = 1000.',
-            'ParticleDecays:limitTau0 = on',
-            'ParticleDecays:tau0Max = 10',
-            'ParticleDecays:allowPhotonRadiation = on'
         )
     ),
-    comEnergy = cms.double(13600.0),
-    crossSection = cms.untracked.double(1.0),
-    filterEfficiency = cms.untracked.double(1),
-    maxEventsToPrint = cms.untracked.int32(0),
-    pythiaHepMCVerbosity = cms.untracked.bool(False),
-    pythiaPylistVerbosity = cms.untracked.int32(0)
+    Verbosity = cms.untracked.int32(0),
+    firstRun = cms.untracked.uint32(1),
+    psethack = cms.string('a to tautau pTgun')
 )
 
 
-process.ProductionFilterSequence = cms.Sequence(process.generator)
-
 # Path and EndPath definitions
-process.generation_step = cms.Path(process.pgen)
-#process.generation_step = cms.Path(process.pgen + process.genHToAATo4TauFilter)
+process.generation_step = cms.Path(process.pgen+process.genAToTauTauFilter)
 process.simulation_step = cms.Path(process.psim)
 process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)
@@ -188,7 +153,7 @@ from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 # filter all path with the production filter sequence
 for path in process.paths:
-	getattr(process,path).insert(0, process.ProductionFilterSequence)
+	getattr(process,path).insert(0, process.generator)
 
 # customisation of the process.
 
