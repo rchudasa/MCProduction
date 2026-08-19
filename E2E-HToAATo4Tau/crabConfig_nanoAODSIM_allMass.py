@@ -21,14 +21,15 @@ for Mass in masses:
     cfg = config()
 
     # General
-    cfg.General.requestName = f'{Mass}_nanoAODSIM_tauNoFilter'
+    cfg.General.requestName = f'{Mass}_nanoAODSIM-v15_tauNoFilter'
     cfg.General.workArea = 'crab_bigProduction'
     cfg.General.transferOutputs = True
     cfg.General.transferLogs = True
 
     # JobType
     cfg.JobType.pluginName = 'Analysis'
-    cfg.JobType.psetName = 'step5_NanoAOD_v2_cfg.py'
+    cfg.JobType.psetName = 'step5_NanoAODv15_cfg.py'
+    #cfg.JobType.psetName = 'step5_NanoAOD_v2_cfg.py'
     #cfg.JobType.maxMemoryMB = 8000
     cfg.JobType.numCores = 1 
     cfg.JobType.allowUndistributedCMSSW = True
